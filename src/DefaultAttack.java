@@ -12,6 +12,6 @@ public class DefaultAttack implements Attack{
     public void performAttack(Pokemon attacker, Pokemon opponent) {
         int damage = new Random().nextInt(intensity) + 1;
         opponent.healthPoints -= damage;
-        System.out.println(attacker.name + " used " + name + " and dealt " + damage + " damage to " + opponent.name);
+        System.out.println(attacker.name + " useddd " + name + " and dealt " + damage + " damage to " + opponent.name);
     }
 }
