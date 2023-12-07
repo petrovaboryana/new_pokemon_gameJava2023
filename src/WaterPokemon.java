@@ -1,12 +1,17 @@
 public class WaterPokemon extends Pokemon{
     public WaterPokemon(String name, Size size) {
-        super(name, "Water", size);
+        super(name, Type.WATER, size);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
     @Override
     public void initializeAttacks() {
         attackMenu.addAttack(new WaterAttack("Water Gun", 15));
         attackMenu.addAttack(new WaterAttack("Hydro Pump", 18));
-        //да добавя още атаки
+        attackMenu.addAttack(new WaterAttack("Water Blaster",20));
     }
 }

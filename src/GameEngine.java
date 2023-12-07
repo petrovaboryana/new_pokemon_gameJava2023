@@ -1,8 +1,8 @@
 import java.util.List;
 
 public class GameEngine {
-    private PokemonMenu pokemonMenu;
-    private BattleSystem battleSystem;
+    protected PokemonMenu pokemonMenu;
+    protected BattleSystem battleSystem;
 
     public GameEngine() {
         this.pokemonMenu = new PokemonMenu();

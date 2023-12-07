@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class AttackMenu {
@@ -17,7 +18,8 @@ public class AttackMenu {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose an attack:");
         for (int i = 0; i < attacks.size(); i++) {
-            System.out.println((i + 1) + ". " + attacks.get(i).getClass().getSimpleName());
+            Attack attack = attacks.get(i);
+            System.out.println((i + 1) + ". " + attack.getName());
         }
 
         int choice;
@@ -26,5 +28,10 @@ public class AttackMenu {
         } while (choice < 1 || choice > attacks.size());
 
         return attacks.get(choice - 1);
+    }
+    public Attack getRandomAttack() {
+        Random random = new Random();
+        int randomIndex = random.nextInt(attacks.size());
+        return attacks.get(randomIndex);
     }
 }

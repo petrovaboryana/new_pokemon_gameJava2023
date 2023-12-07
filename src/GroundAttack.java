@@ -1,5 +1,5 @@
 public class GroundAttack extends DefaultAttack{
-    GroundAttack(String name, int intensity) {
+    public GroundAttack(String name, int intensity) {
         super(name, intensity);
     }
 }
