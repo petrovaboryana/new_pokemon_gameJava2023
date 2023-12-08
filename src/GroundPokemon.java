@@ -1,6 +1,6 @@
 public class GroundPokemon extends Pokemon{
     public GroundPokemon(String name, Size size) {
-        super(name, Type.GROUND, size);
+        super(name, Type.GROUND, size,"\u001B[32m");
     }
 
     @Override

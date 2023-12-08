@@ -6,6 +6,7 @@ public abstract class Pokemon {
     protected Type type;
     protected Size size;
     protected AttackMenu attackMenu;
+    protected String color;
 
     public String getName() {
         return name;
@@ -55,7 +56,7 @@ public abstract class Pokemon {
         this.attackMenu = attackMenu;
     }
 
-    protected Pokemon(String name, Type type, Size size) {
+    protected Pokemon(String name, Type type, Size size,String color) {
         this.name = name;
         this.type = type;
         this.size = size;
@@ -63,8 +64,12 @@ public abstract class Pokemon {
         this.attackPoints = 50;
         this.defensePoints = 50;
         this.attackMenu = new AttackMenu();
+        this.color = color;
         initializeAttacks();
         adjustStatsBasedOnSize();
+    }
+    public String getColor() {
+        return color;
     }
     public abstract void initializeAttacks();
 

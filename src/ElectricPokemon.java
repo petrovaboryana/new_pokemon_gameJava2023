@@ -1,6 +1,6 @@
 public class ElectricPokemon extends Pokemon {
     public ElectricPokemon(String name, Size size) {
-        super(name,Type.ELECTRIC, size);
+        super(name,Type.ELECTRIC, size,"\u001B[33m");
     }
 
     @Override

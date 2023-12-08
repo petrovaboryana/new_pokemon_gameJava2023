@@ -1,6 +1,6 @@
 public class WaterPokemon extends Pokemon{
     public WaterPokemon(String name, Size size) {
-        super(name, Type.WATER, size);
+        super(name, Type.WATER, size, "\u001B[34m");
     }
 
     @Override

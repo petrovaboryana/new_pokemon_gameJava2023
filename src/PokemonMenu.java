@@ -37,7 +37,7 @@ public class PokemonMenu {//да оправя сканера
                     }
                 }
             } while(true);
-            System.out.println("You successfully add " + userPokemon.get(i).name + " to your list of Pokemons");
+            System.out.println("You successfully add " + userPokemon.get(i).getColor() + userPokemon.get(i).getName()+ "\u001B[0m" + " to your list of Pokemons");
         }
     }
 
@@ -46,16 +46,21 @@ public class PokemonMenu {//да оправя сканера
     }
 
     private void displayAvailablePokemon() {
-        System.out.println("Available Pokemons are:");
+        System.out.println("\u001B[31m" + "Available Pokemons are:" + "\u001B[0m");
         for (int i = 0; i < availablePokemon.size(); i++) {
-            System.out.println((i + 1) + ". " + availablePokemon.get(i).toString());
+            Pokemon pokemon = availablePokemon.get(i);
+            String coloredText = pokemon.getColor() + (i + 1) + ". " + pokemon.toString() + "\u001B[0m";
+            System.out.println(coloredText);
+//            System.out.println((i + 1) + ". " + availablePokemon.get(i).toString());
         }
     }
     public static void displayUserPokemon(List<Pokemon> userPokemon) {
         System.out.println("Your Pokemon:");
         for (int i = 0; i < userPokemon.size(); i++) {
             Pokemon pokemon = userPokemon.get(i);
-            System.out.println((i + 1) + ". " + pokemon.name + " (HP: " + pokemon.healthPoints + ")");
+            String coloredText = pokemon.getColor() + (i + 1) + ". " + pokemon.name + " (HP: " + pokemon.healthPoints + ")" + "\u001B[0m";
+            System.out.println(coloredText);
+//            System.out.println((i + 1) + ". " + pokemon.name + " (HP: " + pokemon.healthPoints + ")");
         }
     }
     public static Pokemon chooseActivePokemon(List<Pokemon> userPokemon) {
