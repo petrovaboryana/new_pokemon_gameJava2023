@@ -35,6 +35,8 @@ public class BattleSystem {//да извадя сканера
 
                     if (choice == 1) {
                         activePokemon.performAttack(opponent);
+                        System.out.println(activePokemon.getName() + " HP after this attack is: " + activePokemon.getHealthPoints());
+                        System.out.println(opponent.getName() + " HP after this attack is: " + opponent.getHealthPoints());
                     } else if (choice == 2) {
                         activePokemon = changePokemon(userPokemon, activePokemon);
                     }
@@ -45,6 +47,8 @@ public class BattleSystem {//да извадя сканера
                     }
                     System.out.println(redColor + "Opponent's turn:" + resetColor);
                     opponent.performRandomAttack(activePokemon);
+                    System.out.println(activePokemon.getName() + " HP after this attack is: " + activePokemon.getHealthPoints());
+                    System.out.println(opponent.getName() + " HP after this attack is: " + opponent.getHealthPoints());
 
                     if (activePokemon.healthPoints <= 0) {
                         System.out.println(activePokemon.name + " fainted!");

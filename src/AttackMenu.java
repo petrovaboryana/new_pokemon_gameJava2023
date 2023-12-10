@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class AttackMenu {
     private List<Attack> attacks;
@@ -14,7 +11,7 @@ public class AttackMenu {
         attacks.add(attack);
     }
 
-    public Attack chooseAttack() {
+    public Attack chooseAttack() { //тук имам проблем трябва изключение
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose an attack:");
         for (int i = 0; i < attacks.size(); i++) {
@@ -22,13 +19,30 @@ public class AttackMenu {
             System.out.println((i + 1) + ". " + attack.getName());
         }
 
-        int choice;
-        do {
-            choice = scanner.nextInt();
-        } while (choice < 1 || choice > attacks.size());
+        int choice = -1; // Използваме стойност, която не е валиден индекс
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                System.out.println("Enter the number corresponding to your choice:");
+                choice = scanner.nextInt();
+
+                if (choice >= 1 && choice <= attacks.size()) {
+                    validInput = true;
+                } else {
+                    System.out.println("Invalid choice. Please enter a number between 1 and " + attacks.size() + ".");
+                }
+            } catch (NoSuchElementException e) {
+                System.out.println("Invalid input or input not available. Please try again.");
+                scanner.nextLine(); // Изчистваме буфера на скенера, за да избегнем зацикляне
+            }
+        }
 
         return attacks.get(choice - 1);
     }
+
+
+
     public Attack getRandomAttack() {
         Random random = new Random();
         int randomIndex = random.nextInt(attacks.size());
