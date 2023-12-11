@@ -51,7 +51,6 @@ public class PokemonMenu {//да оправя сканера
             Pokemon pokemon = availablePokemon.get(i);
             String coloredText = pokemon.getColor() + (i + 1) + ". " + pokemon.toString() + "\u001B[0m";
             System.out.println(coloredText);
-//            System.out.println((i + 1) + ". " + availablePokemon.get(i).toString());
         }
     }
     public static void displayUserPokemon(List<Pokemon> userPokemon) {
@@ -60,7 +59,6 @@ public class PokemonMenu {//да оправя сканера
             Pokemon pokemon = userPokemon.get(i);
             String coloredText = pokemon.getColor() + (i + 1) + ". " + pokemon.name + " (HP: " + pokemon.healthPoints + ")" + "\u001B[0m";
             System.out.println(coloredText);
-//            System.out.println((i + 1) + ". " + pokemon.name + " (HP: " + pokemon.healthPoints + ")");
         }
     }
     public static Pokemon chooseActivePokemon(List<Pokemon> userPokemon) {
@@ -80,5 +78,4 @@ public class PokemonMenu {//да оправя сканера
 
         return userPokemon.get(selectedIndex - 1);
     }
-
 }

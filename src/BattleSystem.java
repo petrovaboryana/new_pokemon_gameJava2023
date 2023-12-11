@@ -5,73 +5,84 @@ import java.util.Scanner;
 
 public class BattleSystem {//да извадя сканера
     private static final int NUM_BATTLES = 5;
-    private static final int NUM_ROUNDS_PER_BATTLE = 3;
-    private static final int CRYSTALS_PER_VICTORY = 10;
+    private static final int NUM_ROUNDS_PER_BATTLE = 5;
+    private static final int CRYSTALS_PER_BATTLE = 10;
+    private static final int DIAMONDS_PER_BATTLE = 50;
     String redColor = "\u001B[31m";
     String resetColor = "\u001B[0m";
-
     public int startTournament(List<Pokemon> userPokemon) {
-        int crystals = 0;
+        int totalCrystals = 0;
 
         for (int battleNum = 1; battleNum <= NUM_BATTLES; battleNum++) {
             System.out.println("\n----- Battle " + battleNum + " -----");
+            int crystalsEarned = playBattle(userPokemon);
+            totalCrystals += crystalsEarned;
 
-            for (int round = 1; round <= NUM_ROUNDS_PER_BATTLE; round++) {
-                System.out.println(redColor + "\n--- Round " + round + " ---" + resetColor);
-                Pokemon opponent = getRandomOpponent();
-
-                System.out.println("You are facing a " + opponent.getColor() + opponent.name + resetColor + "!");
-
-                boolean allUserPokemonDead = false;
-                boolean opponentDead = false;
-                Pokemon activePokemon = PokemonMenu.chooseActivePokemon(userPokemon);
-                while (!allUserPokemonDead && !opponentDead) {
-
-
-                    System.out.println("\nYour " + activePokemon.getColor() + activePokemon.getName() + "\u001B[0m" + "'s turn:");
-                    displayBattleOptions();
-                    Scanner scanner = new Scanner(System.in);
-                    int choice = scanner.nextInt();
-
-                    if (choice == 1) {
-                        activePokemon.performAttack(opponent);
-                        System.out.println(activePokemon.getName() + " HP after this attack is: " + activePokemon.getHealthPoints());
-                        System.out.println(opponent.getName() + " HP after this attack is: " + opponent.getHealthPoints());
-                    } else if (choice == 2) {
-                        activePokemon = changePokemon(userPokemon, activePokemon);
-                    }
-
-                    if (opponent.healthPoints <= 0) {
-                        opponentDead = true;
-                        break;
-                    }
-                    System.out.println(redColor + "Opponent's turn:" + resetColor);
-                    opponent.performRandomAttack(activePokemon);
-                    System.out.println(activePokemon.getName() + " HP after this attack is: " + activePokemon.getHealthPoints());
-                    System.out.println(opponent.getName() + " HP after this attack is: " + opponent.getHealthPoints());
-
-                    if (activePokemon.healthPoints <= 0) {
-                        System.out.println(activePokemon.name + " fainted!");
-                        boolean allUserPokemonFainted = true;
-                        for (Pokemon userPokeCheck : userPokemon) {
-                            if (userPokeCheck.healthPoints > 0) {
-                                allUserPokemonFainted = false;
-                                break;
-                            }
-                        }
-                        allUserPokemonDead = allUserPokemonFainted;
-                    }
-                }
-                if (opponentDead) {
-                    System.out.println("You defeated the wild " + opponent.name + " in Round " + round + "!");
-                    crystals += CRYSTALS_PER_VICTORY;
-                } else {
-                    System.out.println("All your Pokemon fainted in Round " + round + ". Battle over!");
-                    break;
-                }
+            if (crystalsEarned == 0) {
+                System.out.println("You lost the tournament. Better luck next time!");
+                break;
             }
         }
-        return crystals;
+        return totalCrystals;
+    }
+    private int playBattle(List<Pokemon> userPokemon) {
+        int userWins = 0;
+
+        for (int round = 1; round <= NUM_ROUNDS_PER_BATTLE; round++) {
+            System.out.println("\n--- Round " + round + " ---");
+
+            int result = playRound(userPokemon);
+            if (result == 1) {
+                userWins++;
+            } else if (result == 2) {
+                System.out.println("Your Pokemon fainted.");
+            }
+        }
+        return whoWinsTheBattle(userWins);
+    }
+    public int whoWinsTheBattle(int userWins) {
+        int crystals = 0;
+        if (userWins < NUM_ROUNDS_PER_BATTLE / 2) {
+            System.out.println("You lost the battle.");
+            return 0;
+        } else {
+            System.out.println("You won the battle!");
+            return crystals += CRYSTALS_PER_BATTLE;
+        }
+    }
+
+    private int playRound(List<Pokemon> userPokemon) {
+        Pokemon opponent = getRandomOpponent();
+        System.out.println("You are facing a " + opponent.getColor() + opponent.name + resetColor + "!");
+        Pokemon activePokemon = PokemonMenu.chooseActivePokemon(userPokemon);
+
+        System.out.println("Your " + activePokemon.name + "'s turn:");
+        displayBattleOptions();
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+
+        if (choice == 1) {
+            activePokemon.performAttack(opponent);
+            System.out.println("Your " + activePokemon.name + "'s HP: " + activePokemon.getHealthPoints());
+            System.out.println("Opponent's " + opponent.name + "'s HP: " + opponent.getHealthPoints());
+            } else if (choice == 2) {
+                activePokemon = changePokemon(userPokemon, activePokemon);
+            }
+
+        System.out.println("Opponent's turn:");
+        opponent.performRandomAttack(activePokemon);
+        System.out.println("Your " + activePokemon.name + "'s HP: " + activePokemon.getHealthPoints());
+        System.out.println("Opponent's " + opponent.name + "'s HP: " + opponent.getHealthPoints());
+
+        if (opponent.healthPoints < activePokemon.healthPoints) {
+            System.out.println("Opponent fainted!");
+            return 1;
+        } else if (opponent.healthPoints == activePokemon.healthPoints ) {
+            System.out.println("No one wins!");
+            return 0;
+        }
+        System.out.println("Your " + activePokemon.name + " fainted!");
+        return 2;
     }
 
     private void displayBattleOptions() {

@@ -19,7 +19,7 @@ public class AttackMenu {
             System.out.println((i + 1) + ". " + attack.getName());
         }
 
-        int choice = -1; // Използваме стойност, която не е валиден индекс
+        int choice = -1;
         boolean validInput = false;
 
         while (!validInput) {
@@ -34,14 +34,11 @@ public class AttackMenu {
                 }
             } catch (NoSuchElementException e) {
                 System.out.println("Invalid input or input not available. Please try again.");
-                scanner.nextLine(); // Изчистваме буфера на скенера, за да избегнем зацикляне
+                scanner.nextLine();
             }
         }
-
         return attacks.get(choice - 1);
     }
-
-
 
     public Attack getRandomAttack() {
         Random random = new Random();
