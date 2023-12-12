@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class DefaultAttack implements Attack{
+public class DefaultAttack implements Attackable {
     protected String name;
     protected int intensity;
 

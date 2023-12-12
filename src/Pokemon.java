@@ -68,6 +68,16 @@ public abstract class Pokemon {
         initializeAttacks();
         adjustStatsBasedOnSize();
     }
+    protected Pokemon(String name, Size size) {
+        this.name = name;
+        this.size = size;
+        this.healthPoints = 100;
+        this.attackPoints = 50;
+        this.defensePoints = 50;
+        this.color = "random";
+        adjustStatsBasedOnSize();
+    }
+
     public String getColor() {
         return color;
     }
@@ -81,11 +91,11 @@ public abstract class Pokemon {
         }
     }
     public void performAttack(Pokemon opponent) {
-        Attack chosenAttack = attackMenu.chooseAttack();
+        Attackable chosenAttack = attackMenu.chooseAttack();
         chosenAttack.performAttack(this, opponent);
     }
     public void performRandomAttack(Pokemon opponent) {
-        Attack randomAttack = attackMenu.getRandomAttack();
+        Attackable randomAttack = attackMenu.getRandomAttack();
         randomAttack.performAttack(this, opponent);
     }
 

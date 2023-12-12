@@ -14,7 +14,7 @@ public class BattleSystem {//да извадя сканера
         int totalCrystals = 0;
 
         for (int battleNum = 1; battleNum <= NUM_BATTLES; battleNum++) {
-            System.out.println("\n----- Battle " + battleNum + " -----");
+            System.out.println(redColor + "\n----- Battle " + battleNum + " -----" + resetColor);
             int crystalsEarned = playBattle(userPokemon);
             totalCrystals += crystalsEarned;
 
@@ -27,6 +27,7 @@ public class BattleSystem {//да извадя сканера
     }
     private int playBattle(List<Pokemon> userPokemon) {
         int userWins = 0;
+        int opponentWins =0;
 
         for (int round = 1; round <= NUM_ROUNDS_PER_BATTLE; round++) {
             System.out.println("\n--- Round " + round + " ---");
@@ -35,14 +36,15 @@ public class BattleSystem {//да извадя сканера
             if (result == 1) {
                 userWins++;
             } else if (result == 2) {
-                System.out.println("Your Pokemon fainted.");
+                opponentWins++;
+                System.out.println("Better luck next round!");
             }
         }
-        return whoWinsTheBattle(userWins);
+        return whoWinsTheBattle(userWins,opponentWins);
     }
-    public int whoWinsTheBattle(int userWins) {
+    public int whoWinsTheBattle(int userWins, int opponentWins) {
         int crystals = 0;
-        if (userWins < NUM_ROUNDS_PER_BATTLE / 2) {
+        if (userWins < opponentWins) {
             System.out.println("You lost the battle.");
             return 0;
         } else {
@@ -56,7 +58,7 @@ public class BattleSystem {//да извадя сканера
         System.out.println("You are facing a " + opponent.getColor() + opponent.name + resetColor + "!");
         Pokemon activePokemon = PokemonMenu.chooseActivePokemon(userPokemon);
 
-        System.out.println("Your " + activePokemon.name + "'s turn:");
+        System.out.println("Your " + activePokemon.getColor() + activePokemon.name + resetColor + "'s turn:");
         displayBattleOptions();
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
@@ -69,7 +71,7 @@ public class BattleSystem {//да извадя сканера
                 activePokemon = changePokemon(userPokemon, activePokemon);
             }
 
-        System.out.println("Opponent's turn:");
+        System.out.println(redColor + "Opponent's turn:" + redColor);
         opponent.performRandomAttack(activePokemon);
         System.out.println("Your " + activePokemon.name + "'s HP: " + activePokemon.getHealthPoints());
         System.out.println("Opponent's " + opponent.name + "'s HP: " + opponent.getHealthPoints());
@@ -97,6 +99,7 @@ public class BattleSystem {//да извадя сканера
         availableOpponents.add(new GroundPokemon("Wild Geodude", Size.NORMAL));
         availableOpponents.add(new ElectricPokemon("Wild Shockle",Size.LARGE));
         availableOpponents.add(new WaterPokemon("Wild Shark",Size.LARGE));
+        availableOpponents.add(new GroundPokemon("Wild Tree",Size.SMALL));
 
         Random random = new Random();
         int randomIndex = random.nextInt(availableOpponents.size());
