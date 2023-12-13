@@ -12,10 +12,6 @@ public abstract class Pokemon {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getHealthPoints() {
         return healthPoints;
     }
@@ -60,7 +56,7 @@ public abstract class Pokemon {
         this.name = name;
         this.type = type;
         this.size = size;
-        this.healthPoints = 100;
+        this.healthPoints = 80;
         this.attackPoints = 50;
         this.defensePoints = 50;
         this.attackMenu = new AttackMenu();
@@ -71,7 +67,7 @@ public abstract class Pokemon {
     protected Pokemon(String name, Size size) {
         this.name = name;
         this.size = size;
-        this.healthPoints = 100;
+        this.healthPoints = 80;
         this.attackPoints = 50;
         this.defensePoints = 50;
         this.color = "random";
@@ -97,6 +93,17 @@ public abstract class Pokemon {
     public void performRandomAttack(Pokemon opponent) {
         Attackable randomAttack = attackMenu.getRandomAttack();
         randomAttack.performAttack(this, opponent);
+    }
+    public void heal(int healCost) {
+        int maxHealth = 120;
+        int currentHealth = getHealthPoints();
+
+        if (currentHealth < maxHealth) {
+            int newHealth = (currentHealth + healCost);
+            setHealthPoints(newHealth);
+        } else {
+            System.out.println(getName() + " is already at full health.");
+        }
     }
 
     @Override
