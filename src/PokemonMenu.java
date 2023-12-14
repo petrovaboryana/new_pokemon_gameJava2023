@@ -2,9 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class PokemonMenu {//да оправя сканера
+public class PokemonMenu {
     private List<Pokemon> availablePokemon;
     private List<Pokemon> userPokemon;
+    private static Scanner scanner = new Scanner(System.in);
 
     public PokemonMenu() {
         this.availablePokemon = new ArrayList<>();
@@ -18,7 +19,6 @@ public class PokemonMenu {//да оправя сканера
 
     public void choosePokemon() {
         displayAvailablePokemon();
-        Scanner scanner = new Scanner(System.in);//тук
 
         for (int i = 0; i < 3; i++) {
             int selectedIndex;
@@ -62,8 +62,6 @@ public class PokemonMenu {//да оправя сканера
         }
     }
     public static Pokemon chooseActivePokemon(List<Pokemon> userPokemon) {
-        Scanner scanner = new Scanner(System.in);//тук
-
         System.out.println("Choose the active Pokemon for this Battle:");
         displayUserPokemon(userPokemon);
         int selectedIndex;

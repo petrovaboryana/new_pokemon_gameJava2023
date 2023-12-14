@@ -52,7 +52,7 @@ public abstract class Pokemon {
         this.attackMenu = attackMenu;
     }
 
-    protected Pokemon(String name, Type type, Size size,String color) {
+    protected Pokemon(String name, Type type, Size size, String color) {
         this.name = name;
         this.type = type;
         this.size = size;
@@ -64,6 +64,7 @@ public abstract class Pokemon {
         initializeAttacks();
         adjustStatsBasedOnSize();
     }
+
     protected Pokemon(String name, Size size) {
         this.name = name;
         this.size = size;
@@ -77,6 +78,7 @@ public abstract class Pokemon {
     public String getColor() {
         return color;
     }
+
     public abstract void initializeAttacks();
 
     public void adjustStatsBasedOnSize() {
@@ -86,14 +88,17 @@ public abstract class Pokemon {
             healthPoints += 20;
         }
     }
+
     public void performAttack(Pokemon opponent) {
         Attackable chosenAttack = attackMenu.chooseAttack();
         chosenAttack.performAttack(this, opponent);
     }
+
     public void performRandomAttack(Pokemon opponent) {
         Attackable randomAttack = attackMenu.getRandomAttack();
         randomAttack.performAttack(this, opponent);
     }
+
     public void heal(int healCost) {
         int maxHealth = 120;
         int currentHealth = getHealthPoints();
@@ -108,11 +113,12 @@ public abstract class Pokemon {
 
     @Override
     public String toString() {
-        return  "name='" + name + '\'' +
+        return "name='" + name + '\'' +
                 ", healthPoints=" + healthPoints +
                 ", attackPoints=" + attackPoints +
                 ", defensePoints=" + defensePoints +
                 ", type='" + type + '\'' +
                 ", size=" + size;
     }
+
 }

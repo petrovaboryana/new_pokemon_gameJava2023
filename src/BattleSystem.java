@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class BattleSystem {//да извадя сканера
+public class BattleSystem {
     private static final int NUM_BATTLES = 3;
     private static final int NUM_ROUNDS_PER_BATTLE = 5;
     private static final int CRYSTALS_PER_ROUND = 10;
@@ -12,39 +12,48 @@ public class BattleSystem {//да извадя сканера
     String redColor = "\u001B[31m";
     String resetColor = "\u001B[0m";
     String greenColor = "\u001B[32m";
-    public int startTournament(List<Pokemon> userPokemon) {
+    private static Scanner scanner = new Scanner(System.in);
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+    public Result startTournament(List<Pokemon> userPokemon) {
         int totalDiamonds = 0;
+        int totalCrystals = 0;
 
         for (int battleNum = 1; battleNum <= NUM_BATTLES; battleNum++) {
             System.out.println(redColor + "\n----- Battle " + battleNum + " -----" + resetColor);
             Pokemon opponent = getRandomOpponent();
             Pokemon activePokemon = PokemonMenu.chooseActivePokemon(userPokemon);
-            int diamondsEarned = playBattle(userPokemon,opponent, activePokemon);
-            totalDiamonds += diamondsEarned;
+            Result battleResult = playBattle(userPokemon, opponent, activePokemon);
+            totalDiamonds += battleResult.getDiamondsFromBattles();
+            totalCrystals += battleResult.getCrystalsFromRounds();
 
-            if (diamondsEarned == 0) {
+            if (battleResult.getDiamondsFromBattles() == 0) {
                 System.out.println("You lost the Battle " + battleNum + ". Better luck next time!");
             }
         }
-        return totalDiamonds;
+        return new Result(totalCrystals, totalDiamonds);
     }
-    private int playBattle(List<Pokemon> userPokemon,Pokemon opponent, Pokemon activePokemon) {
+    public Result playBattle(List<Pokemon> userPokemon, Pokemon opponent, Pokemon activePokemon) {
         int userWins = 0;
         int opponentWins =0;
-        int winnercristals = 0;
+        int crystalsEarned = 0;
 
         for (int round = 1; round <= NUM_ROUNDS_PER_BATTLE; round++) {
             System.out.println("\n--- Round " + round + " ---");
             int result = playRound(activePokemon,opponent,userPokemon);
+
             if (result == 1) {
                 userWins++;
-                winnercristals += CRYSTALS_PER_ROUND;
+                crystalsEarned += CRYSTALS_PER_ROUND;
             } else if (result == 2) {
                 opponentWins++;
                 System.out.println("Better luck next round!");
             }
         }
-        return whoWinsTheBattle(userWins,opponentWins);
+        return new Result(crystalsEarned, whoWinsTheBattle(userWins, opponentWins));
     }
     public int whoWinsTheBattle(int userWins, int opponentWins) {
         int diamonds = 0;
@@ -55,15 +64,14 @@ public class BattleSystem {//да извадя сканера
             System.out.println("No winner in this Battle!");
             return 0;
         }
-        System.out.println("You won the battle!" );
+        System.out.println("\u001B[33m" + "You won the battle!" + resetColor );
         return diamonds += DIAMONDS_PER_BATTLE;
     }
 
-    private int playRound(Pokemon activePokemon,Pokemon opponent,List<Pokemon> userPokemon) {
+    public int playRound(Pokemon activePokemon,Pokemon opponent,List<Pokemon> userPokemon) {
         System.out.println("You are facing a " + opponent.getColor() + opponent.name + " HP: " + opponent.healthPoints + resetColor + "!");
         System.out.println("Your " + activePokemon.getColor() + activePokemon.name + resetColor + "'s turn:");
         displayBattleOptions();
-        Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
         activePokemon = getActivePokemon(userPokemon, choice, activePokemon, opponent);
 
@@ -74,7 +82,7 @@ public class BattleSystem {//да извадя сканера
 
         return whoWinsTheRound(opponent, activePokemon);
     }
-    private Pokemon getActivePokemon(List<Pokemon> userPokemon, int choice, Pokemon activePokemon, Pokemon opponent) {
+    public Pokemon getActivePokemon(List<Pokemon> userPokemon, int choice, Pokemon activePokemon, Pokemon opponent) {
         switch (choice) {
             case 1:
                 activePokemon.performAttack(opponent);
@@ -95,7 +103,7 @@ public class BattleSystem {//да извадя сканера
         return activePokemon;
     }
 
-    private static int whoWinsTheRound(Pokemon opponent, Pokemon activePokemon) {
+    public static int whoWinsTheRound(Pokemon opponent, Pokemon activePokemon) {
         if (opponent.healthPoints < activePokemon.healthPoints) {
             System.out.println("You won the round!");
             return 1;
@@ -113,7 +121,7 @@ public class BattleSystem {//да извадя сканера
         System.out.println("2. Change Pokemon");
         System.out.println(greenColor + "3. Heal Pokemon" + resetColor);
     }
-    private Pokemon getRandomOpponent() {
+    public Pokemon getRandomOpponent() {
         List<Pokemon> availableOpponents = new ArrayList<>();
         availableOpponents.add(new ElectricPokemon("Wild Pikachu", Size.NORMAL));
         availableOpponents.add(new WaterPokemon("Wild Squirtle", Size.NORMAL));
@@ -126,9 +134,7 @@ public class BattleSystem {//да извадя сканера
         int randomIndex = random.nextInt(availableOpponents.size());
         return availableOpponents.get(randomIndex);
     }
-    private Pokemon changePokemon(List<Pokemon> userPokemon, Pokemon currentPokemon) {
-        Scanner scanner = new Scanner(System.in);
-
+    public Pokemon changePokemon(List<Pokemon> userPokemon, Pokemon currentPokemon) {
         System.out.println("Choose a Pokemon to switch to:");
         PokemonMenu.displayUserPokemon(userPokemon);
         int switchIndex = scanner.nextInt();
@@ -149,15 +155,19 @@ public class BattleSystem {//да извадя сканера
     }
     private void healPokemonAction(Pokemon selectedPokemon) {
         System.out.println("Do you want to heal " + selectedPokemon.getName() + "? (Cost: " + HEAL_COST + " crystals)");
+//        System.out.println("Your crystals: " + result.getCrystalsFromRounds());
         System.out.println("1. Yes");
         System.out.println("2. No");
 
-        Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
 
         if (choice == 1) {
-            selectedPokemon.heal(HEAL_COST);
-            System.out.println(selectedPokemon.getName() + " has been healed. New HP is: " + selectedPokemon.getHealthPoints());
+//            if (result.getCrystalsFromRounds() >= HEAL_COST){
+                selectedPokemon.heal(HEAL_COST);
+                System.out.println(selectedPokemon.getName() + " has been healed. New HP is: " + selectedPokemon.getHealthPoints());
+//            }else {
+//                System.out.println("You don't have enough crystals to heal " + selectedPokemon.getName() + ".");
+//            }
         } else {
             System.out.println("Healing canceled.");
         }

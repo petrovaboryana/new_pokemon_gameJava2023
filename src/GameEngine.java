@@ -9,18 +9,27 @@ public class GameEngine {
         this.battleSystem = new BattleSystem();
     }
 
-    public void startGame() {
+    public void setPokemonMenu(PokemonMenu pokemonMenu) {
+        this.pokemonMenu = pokemonMenu;
+    }
+
+    public void setBattleSystem(BattleSystem battleSystem) {
+        this.battleSystem = battleSystem;
+    }
+
+    public Result startGame() {
         pokemonMenu.choosePokemon();
         List<Pokemon> userPokemon = pokemonMenu.getUserPokemon();
 
-        int diamonds = battleSystem.startTournament(userPokemon);
+        Result tournamentResult = battleSystem.startTournament(userPokemon);
 
         System.out.println("\nTournament ended!");
-        System.out.println("Your result: " + diamonds + " diamonds");
-        if (diamonds >= 15) {
+        System.out.println("Your result: " + tournamentResult.getDiamondsFromBattles() + " diamonds");
+        if (tournamentResult.getDiamondsFromBattles() >= 15) {
             System.out.println("Congratulations! You completed the tournament successfully.");
         } else {
             System.out.println("You need at least 15 diamonds to win the tournament. Better luck next time!");
         }
+        return tournamentResult;
     }
 }

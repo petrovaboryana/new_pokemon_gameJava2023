@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class AttackMenuTest {
     private AttackMenu attackMenu;
 
@@ -19,8 +21,8 @@ public class AttackMenuTest {
     public void testAddAttack() {
         Attackable testAttack = new DefaultAttack("Test attack",12);
         attackMenu.addAttack(testAttack);
-        Assertions.assertEquals(1, attackMenu.getAttacks().size());
-        Assertions.assertEquals(testAttack, attackMenu.getAttacks().get(0));
+        assertEquals(1, attackMenu.getAttacks().size());
+        assertEquals(testAttack, attackMenu.getAttacks().get(0));
     }
 
     @Test
@@ -39,7 +41,7 @@ public class AttackMenuTest {
 
         Attackable chosenAttack = attackMenu.chooseAttack();
 
-        Assertions.assertEquals(attack2, chosenAttack);
+        assertEquals(attack2, chosenAttack);
     }
 
     @Test
@@ -58,7 +60,7 @@ public class AttackMenuTest {
 
         Attackable chosenAttack = attackMenu.chooseAttack();
 
-        Assertions.assertEquals(attack2, chosenAttack);
+        assertEquals(attack2, chosenAttack);
     }
 
     @Test
@@ -74,5 +76,19 @@ public class AttackMenuTest {
         }
         Assertions.assertTrue(randomAttacks.contains(attack1));
         Assertions.assertTrue(randomAttacks.contains(attack2));
+    }
+    @Test
+    public void testGetAttacks() {
+        Assertions.assertNotNull(attackMenu.getAttacks());
+        Assertions.assertTrue(attackMenu.getAttacks().isEmpty());
+    }
+    @Test
+    public void testSetAttacks() {
+        List<Attackable> newAttacks = new ArrayList<>();
+        newAttacks.add(new DefaultAttack("TestAttack",10));
+
+        attackMenu.setAttacks(newAttacks);
+
+        Assertions.assertEquals(newAttacks, attackMenu.getAttacks());
     }
 }

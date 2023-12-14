@@ -13,19 +13,20 @@ public class PokemonTest {
         pokemon = new Pokemon("Test pokemon", Size.NORMAL) {
             @Override
             public void initializeAttacks() {
+                attackMenu.addAttack(new DefaultAttack("New Test Attack1", 5));
             }
         };
         attackMenu = new AttackMenu();
         attacker = new Pokemon("Attacker", Size.NORMAL) {
             @Override
             public void initializeAttacks() {
-
+                attackMenu.addAttack(new DefaultAttack("New Test Attack", 10));
             }
         };
         opponent = new Pokemon("Opponent", Size.NORMAL) {
             @Override
             public void initializeAttacks() {
-
+                attackMenu.addAttack(new DefaultAttack("New Test Attack2", 10));
             }
         };
     }
@@ -53,12 +54,10 @@ public class PokemonTest {
     }
 //    @Test
 //    public void testPerformAttack() {
-//        Attackable testAttack = new DefaultAttack("Test Attack", 10);
-//        attackMenu.addAttack(testAttack);
 //
 //        attacker.performAttack(opponent);
 //
-//        Assertions.assertEquals(90, opponent.getHealthPoints());
+//        Assertions.assertTrue(opponent.getHealthPoints() < 80, "Opponent health should be decreased after the attack.");
 //    }
 //
 //    @Test

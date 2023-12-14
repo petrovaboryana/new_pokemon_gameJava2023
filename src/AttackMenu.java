@@ -2,6 +2,7 @@ import java.util.*;
 
 public class AttackMenu {
     private List<Attackable> attacks;
+    private static Scanner scanner = new Scanner(System.in);
 
     public AttackMenu() {
         this.attacks = new ArrayList<>();
@@ -20,7 +21,6 @@ public class AttackMenu {
     }
 
     public Attackable chooseAttack() { //тук имам проблем трябва изключение
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Choose an attack:");
         for (int i = 0; i < attacks.size(); i++) {
             Attackable attack = attacks.get(i);
