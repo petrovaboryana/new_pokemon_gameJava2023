@@ -64,7 +64,7 @@ public class PokemonMenu {//да оправя сканера
     public static Pokemon chooseActivePokemon(List<Pokemon> userPokemon) {
         Scanner scanner = new Scanner(System.in);//тук
 
-        System.out.println("Choose the active Pokemon for this round:");
+        System.out.println("Choose the active Pokemon for this Battle:");
         displayUserPokemon(userPokemon);
         int selectedIndex;
 

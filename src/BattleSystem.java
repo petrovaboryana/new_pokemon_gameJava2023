@@ -13,20 +13,20 @@ public class BattleSystem {//да извадя сканера
     String resetColor = "\u001B[0m";
     String greenColor = "\u001B[32m";
     public int startTournament(List<Pokemon> userPokemon) {
-        int totalCrystals = 0;
+        int totalDiamonds = 0;
 
         for (int battleNum = 1; battleNum <= NUM_BATTLES; battleNum++) {
             System.out.println(redColor + "\n----- Battle " + battleNum + " -----" + resetColor);
             Pokemon opponent = getRandomOpponent();
             Pokemon activePokemon = PokemonMenu.chooseActivePokemon(userPokemon);
-            int crystalsEarned = playBattle(userPokemon,opponent, activePokemon);
-            totalCrystals += crystalsEarned;
+            int diamondsEarned = playBattle(userPokemon,opponent, activePokemon);
+            totalDiamonds += diamondsEarned;
 
-            if (crystalsEarned == 0) {
+            if (diamondsEarned == 0) {
                 System.out.println("You lost the Battle " + battleNum + ". Better luck next time!");
             }
         }
-        return totalCrystals;
+        return totalDiamonds;
     }
     private int playBattle(List<Pokemon> userPokemon,Pokemon opponent, Pokemon activePokemon) {
         int userWins = 0;

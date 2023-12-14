@@ -16,7 +16,7 @@ public class GameEngine {
         int diamonds = battleSystem.startTournament(userPokemon);
 
         System.out.println("\nTournament ended!");
-        System.out.println("Your result: " + diamonds + " crystals");
+        System.out.println("Your result: " + diamonds + " diamonds");
         if (diamonds >= 15) {
             System.out.println("Congratulations! You completed the tournament successfully.");
         } else {
