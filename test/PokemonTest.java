@@ -52,21 +52,43 @@ public class PokemonTest {
         int expectedHealthPoints = initialHealthPoints + 20;
         Assertions.assertEquals(expectedHealthPoints, pokemon.getHealthPoints());
     }
-//    @Test
-//    public void testPerformAttack() {
-//
-//        attacker.performAttack(opponent);
-//
-//        Assertions.assertTrue(opponent.getHealthPoints() < 80, "Opponent health should be decreased after the attack.");
-//    }
-//
-//    @Test
-//    public void testPerformRandomAttack() {
-//        Attackable testRandomAttack = new DefaultAttack("Random Test Attack", 15);
-//        attackMenu.addAttack(testRandomAttack);
-//
-//        attacker.performRandomAttack(opponent);
-//
-//        Assertions.assertEquals(85, opponent.getHealthPoints());
-//    }
+    @Test
+    public void testHealIncreasesHealth() {
+        int initialHealth = pokemon.getHealthPoints();
+        int healAmount = 10;
+
+        pokemon.heal(healAmount);
+
+        Assertions.assertEquals(initialHealth + healAmount, pokemon.getHealthPoints());
+    }
+
+    @Test
+    public void testHealAtFullHealth() {
+        int maxHealth = 100;
+        pokemon.setHealthPoints(maxHealth);
+
+        pokemon.heal(10);
+
+        Assertions.assertEquals(maxHealth, pokemon.getHealthPoints());
+    }
+    @Test
+    public void testPerformAttackReducesOpponentHealthToZero() {
+        Attackable chosenAttack = new DefaultAttack("test attack",20);
+        opponent.setHealthPoints(5);
+        chosenAttack.performAttack(attacker, opponent);
+        Assertions.assertTrue(opponent.getHealthPoints() >= 0);
+        Assertions.assertEquals(0,opponent.getHealthPoints());
+    }
+    @Test
+    void testAttackDoesNotReduceOpponentHealthBelowZero() {
+        Attackable chosenAttack = new DefaultAttack("test attack",20);
+        opponent.setHealthPoints(2);
+        int initialHealth = opponent.getHealthPoints();
+
+        chosenAttack.performAttack(attacker, opponent);
+
+        Assertions.assertTrue(opponent.getHealthPoints() >= 0);
+        Assertions.assertTrue(opponent.getHealthPoints() <= initialHealth);
+    }
+
 }

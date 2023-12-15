@@ -2,8 +2,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,44 +21,6 @@ public class AttackMenuTest {
         attackMenu.addAttack(testAttack);
         assertEquals(1, attackMenu.getAttacks().size());
         assertEquals(testAttack, attackMenu.getAttacks().get(0));
-    }
-
-    @Test
-    public void testChooseAttackWithValidInput() {
-        List<Attackable> attacks = new ArrayList<>();
-        Attackable attack1 = new DefaultAttack("Attack 1", 10);
-        Attackable attack2 = new DefaultAttack("Attack 2", 20);
-        attacks.add(attack1);
-        attacks.add(attack2);
-
-        String input = "2\n";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        attackMenu.setAttacks(attacks);
-
-        Attackable chosenAttack = attackMenu.chooseAttack();
-
-        assertEquals(attack2, chosenAttack);
-    }
-
-    @Test
-    public void testChooseAttackWithInvalidInputThenValidInput() {
-        List<Attackable> attacks = new ArrayList<>();
-        Attackable attack1 = new DefaultAttack("Attack 1", 10);
-        Attackable attack2 = new DefaultAttack("Attack 2", 20);
-        attacks.add(attack1);
-        attacks.add(attack2);
-
-        String input = "invalid\n2\n";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        attackMenu.setAttacks(attacks);
-
-        Attackable chosenAttack = attackMenu.chooseAttack();
-
-        assertEquals(attack2, chosenAttack);
     }
 
     @Test

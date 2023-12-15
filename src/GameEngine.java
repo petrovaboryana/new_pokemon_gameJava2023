@@ -9,14 +9,6 @@ public class GameEngine {
         this.battleSystem = new BattleSystem();
     }
 
-    public void setPokemonMenu(PokemonMenu pokemonMenu) {
-        this.pokemonMenu = pokemonMenu;
-    }
-
-    public void setBattleSystem(BattleSystem battleSystem) {
-        this.battleSystem = battleSystem;
-    }
-
     public Result startGame() {
         pokemonMenu.choosePokemon();
         List<Pokemon> userPokemon = pokemonMenu.getUserPokemon();

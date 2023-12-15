@@ -20,7 +20,7 @@ public class AttackMenu {
         attacks.add(attack);
     }
 
-    public Attackable chooseAttack() { //тук имам проблем трябва изключение
+    public Attackable chooseAttack() {
         System.out.println("Choose an attack:");
         for (int i = 0; i < attacks.size(); i++) {
             Attackable attack = attacks.get(i);

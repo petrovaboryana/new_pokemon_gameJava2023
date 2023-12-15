@@ -20,36 +20,12 @@ public abstract class Pokemon {
         this.healthPoints = healthPoints;
     }
 
-    public int getAttackPoints() {
-        return attackPoints;
-    }
-
-    public void setAttackPoints(int attackPoints) {
-        this.attackPoints = attackPoints;
-    }
-
-    public int getDefensePoints() {
-        return defensePoints;
-    }
-
-    public void setDefensePoints(int defensePoints) {
-        this.defensePoints = defensePoints;
-    }
-
     public Size getSize() {
         return size;
     }
 
     public void setSize(Size size) {
         this.size = size;
-    }
-
-    public AttackMenu getAttackMenu() {
-        return attackMenu;
-    }
-
-    public void setAttackMenu(AttackMenu attackMenu) {
-        this.attackMenu = attackMenu;
     }
 
     protected Pokemon(String name, Type type, Size size, String color) {
@@ -100,7 +76,7 @@ public abstract class Pokemon {
     }
 
     public void heal(int healCost) {
-        int maxHealth = 120;
+        int maxHealth = 100;
         int currentHealth = getHealthPoints();
 
         if (currentHealth < maxHealth) {
@@ -120,5 +96,4 @@ public abstract class Pokemon {
                 ", type='" + type + '\'' +
                 ", size=" + size;
     }
-
 }

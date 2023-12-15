@@ -16,12 +16,12 @@ public class BattleSystemTest {
     private List<Pokemon> testUserPokemon;
     private Pokemon opponent;
     private Pokemon activePokemon;
+    private static Scanner scanner = new Scanner(System.in);
 
 
     @BeforeEach
     public void setUp() {
         battleSystem = new BattleSystem();
-        battleSystem.setScanner(new Scanner(System.in));
         originalSystemIn = System.in;
         testUserPokemon = new ArrayList<>();
         opponent = new ElectricPokemon("Test Opponent", Size.NORMAL);
@@ -62,15 +62,13 @@ public class BattleSystemTest {
 
         String input = "2\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
-        Scanner scanner = new Scanner(System.in);
-        battleSystem.setScanner(scanner);
 
         Pokemon newPokemon = battleSystem.changePokemon(testUserPokemon, testCurrentPokemon);
 
         System.setIn(originalSystemIn);
 
-        Assertions.assertEquals(testUserPokemon.get(1), newPokemon); // Проверка дали методът връща правилния покемон
-        Assertions.assertTrue(newPokemon.getHealthPoints() > 0); // Проверка дали новия покемон има ненулеви точки на здраве
+        Assertions.assertEquals(testUserPokemon.get(1), newPokemon);
+        Assertions.assertTrue(newPokemon.getHealthPoints() > 0);
     }
 
     @Test
@@ -97,24 +95,12 @@ public class BattleSystemTest {
             default:
         }
     }
-//    @Test
-//    public void testGetActivePokemonWithValidInput() {
-//        String input = "1\n";
-//        System.setIn(new ByteArrayInputStream(input.getBytes()));
-//
-//        Pokemon result = battleSystem.getActivePokemon(testUserPokemon, 1, activePokemon, opponent);
-//        assertNotNull(result);
-//        assertEquals(activePokemon, result);  // Проверка дали връщаният резултат е същият като активния покемон
-//    } този тест не минава и не разбирам защо??
     @Test
     public void testGetActivePokemonWithInvalidInput() {
-        String input = "5\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        Result result  = new Result(10,10);
+        Pokemon resultPokemon = battleSystem.getActivePokemon(testUserPokemon, 5, activePokemon, opponent,result);
 
-        Pokemon result = battleSystem.getActivePokemon(testUserPokemon, 5, activePokemon, opponent);
-
-        assertNotNull(result);
-        assertEquals(activePokemon, result);
+        assertNotNull(resultPokemon);
+        assertEquals(activePokemon, resultPokemon);
     }
-
 }

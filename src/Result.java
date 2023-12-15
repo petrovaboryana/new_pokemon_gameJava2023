@@ -14,4 +14,8 @@ public class Result {
     public int getDiamondsFromBattles() {
         return diamondsFromBattles;
     }
+
+    public void setCrystalsFromRounds(int crystalsFromRounds) {
+        this.crystalsFromRounds = crystalsFromRounds;
+    }
 }

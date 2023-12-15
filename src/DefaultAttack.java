@@ -16,7 +16,11 @@ public class DefaultAttack implements Attackable {
     @Override
     public void performAttack(Pokemon attacker, Pokemon opponent) {
         int damage = new Random().nextInt(intensity) + 1;
-        opponent.healthPoints -= damage;
+        if (opponent.healthPoints <= damage){
+            opponent.healthPoints = 0;
+        }else {
+            opponent.healthPoints -= damage;
+        }
         System.out.println(attacker.getColor() + attacker.name + "\u001B[0m" + " used " + this.name + " and dealt " + damage + " damage to " + opponent.name);
     }
 }
