@@ -12,21 +12,19 @@ public class AttackMenu {
         return attacks;
     }
 
-    public void setAttacks(List<Attackable> attacks) {
-        this.attacks = attacks;
-    }
-
     public void addAttack(Attackable attack) {
         attacks.add(attack);
     }
 
-    public Attackable chooseAttack() {
+    public void displayAttackMenu() {
         System.out.println("Choose an attack:");
         for (int i = 0; i < attacks.size(); i++) {
             Attackable attack = attacks.get(i);
             System.out.println((i + 1) + ". " + attack.getName());
         }
+    }
 
+    private int getValidInput() {
         int choice = -1;
         boolean validInput = false;
 
@@ -45,6 +43,12 @@ public class AttackMenu {
                 scanner.nextLine();
             }
         }
+        return choice;
+    }
+
+    public Attackable chooseAttack() {
+        displayAttackMenu();
+        int choice = getValidInput();
         return attacks.get(choice - 1);
     }
 

@@ -14,6 +14,7 @@ public class BattleSystem {
     String greenColor = "\u001B[32m";
     private static Scanner scanner = new Scanner(System.in);
 
+
     public Result startTournament(List<Pokemon> userPokemon) {
         int totalDiamonds = 0;
         int totalCrystals = 0;
@@ -71,25 +72,28 @@ public class BattleSystem {
         System.out.println("Your " + activePokemon.getColor() + activePokemon.name + resetColor + "'s turn:");
         displayBattleOptions();
         int choice = scanner.nextInt();
-        activePokemon = getActivePokemon(userPokemon, choice, activePokemon, opponent,result);
+        Pokemon activePokemonRound = getActivePokemon(userPokemon, choice, activePokemon,opponent,result);
 
         System.out.println(redColor + "Opponent's turn:" + redColor);
         opponent.performRandomAttack(activePokemon);
         System.out.println("Your " + activePokemon.name + "'s HP: " + activePokemon.getHealthPoints());
         System.out.println("Opponent's " + opponent.name + "'s HP: " + opponent.getHealthPoints());
 
-        return whoWinsTheRound(opponent, activePokemon);
+        return whoWinsTheRound(opponent, activePokemonRound);
     }
     public Pokemon getActivePokemon(List<Pokemon> userPokemon, int choice, Pokemon activePokemon, Pokemon opponent, Result result) {
+        Pokemon active1 = null;
+
         switch (choice) {
             case 1:
-                activePokemon.performAttack(opponent);
+                active1 = activePokemon;
+                active1.performAttack(opponent);
                 System.out.println("Your " + activePokemon.name + "'s HP: " + activePokemon.getHealthPoints());
                 System.out.println("Opponent's " + opponent.name + "'s HP: " + opponent.getHealthPoints());
                 break;
             case 2:
-                activePokemon = changePokemon(userPokemon, activePokemon);
-                activePokemon.performAttack(opponent);
+                active1 = changePokemon(userPokemon, active1);
+                active1.performAttack(opponent);
                 break;
             case 3:
                 healPokemonAction(activePokemon,result);
@@ -98,7 +102,7 @@ public class BattleSystem {
                 System.out.println("Invalid choice!");
                 break;
         }
-        return activePokemon;
+        return active1;
     }
 
     public int whoWinsTheRound(Pokemon opponent, Pokemon activePokemon) {

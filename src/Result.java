@@ -7,15 +7,12 @@ public class Result {
         this.diamondsFromBattles = diamondsFromBattles;
     }
 
-    public int getCrystalsFromRounds() {
-        return crystalsFromRounds;
+    public int getCrystalsFromRounds() { return crystalsFromRounds;
     }
 
-    public int getDiamondsFromBattles() {
-        return diamondsFromBattles;
+    public int getDiamondsFromBattles() { return diamondsFromBattles;
     }
 
-    public void setCrystalsFromRounds(int crystalsFromRounds) {
-        this.crystalsFromRounds = crystalsFromRounds;
+    public void setCrystalsFromRounds(int crystalsFromRounds) { this.crystalsFromRounds = crystalsFromRounds;
     }
 }

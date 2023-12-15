@@ -18,7 +18,6 @@ public class BattleSystemTest {
     private Pokemon activePokemon;
     private static Scanner scanner = new Scanner(System.in);
 
-
     @BeforeEach
     public void setUp() {
         battleSystem = new BattleSystem();
@@ -26,31 +25,13 @@ public class BattleSystemTest {
         testUserPokemon = new ArrayList<>();
         opponent = new ElectricPokemon("Test Opponent", Size.NORMAL);
         activePokemon = new ElectricPokemon("Test Active Pokemon", Size.NORMAL);
-
     }
-
-//    @Test
-//    public void testPlayBattle() {
-//        testUserPokemon.add(new ElectricPokemon("Test Pikachu", Size.NORMAL));
-//
-//        Result result = battleSystem.playBattle(testUserPokemon,opponent,activePokemon);
-//
-//        String input = "1\n";
-//        System.setIn(new ByteArrayInputStream(input.getBytes()));
-//        Scanner scanner = new Scanner(System.in);
-//        battleSystem.setScanner(scanner);
-//
-//        assertNotNull(result);
-//        assertTrue(result.getCrystalsFromRounds() >= 0);
-//        assertTrue(result.getDiamondsFromBattles() >= 0);
-//    }
-
     @Test
     public void testGetRandomOpponent() {
         Pokemon randomOpponent = battleSystem.getRandomOpponent();
 
-        Assertions.assertNotNull(randomOpponent); // опонента не е null
-        Assertions.assertTrue(true); // върнатият опонент е Pokemon
+        Assertions.assertNotNull(randomOpponent);
+        Assertions.assertTrue(true);
     }
 
     @Test
@@ -72,29 +53,42 @@ public class BattleSystemTest {
     }
 
     @Test
-    public void testWhoWinsTheBattle() {
+    public void testWhoWinsTheBattle_Lose() {
         int result = battleSystem.whoWinsTheBattle(2, 3);
         Assertions.assertEquals(0, result);
     }
-
     @Test
-    public void testWhoWinsTheRound() {
+    public void testWhoWinsTheBattle_Win() {
+        int beforeDiamonds = 0;
+        int resultDiamonds = battleSystem.whoWinsTheBattle(3, 2);
+
+        Assertions.assertEquals(beforeDiamonds + 5,resultDiamonds);
+    }
+    @Test
+    void testWhoWinsTheRound_Win() {
+        opponent.setHealthPoints(50);
+        activePokemon.setHealthPoints(70);
         int result = battleSystem.whoWinsTheRound(opponent, activePokemon);
 
-        assertTrue(result >= 0 && result <= 2);
-        switch (result) {
-            case 0:
-                System.out.println("No one wins!");
-                break;
-            case 1:
-                System.out.println("You won the round!");
-                break;
-            case 2:
-                System.out.println("Your " + activePokemon.getName() + " lost!");
-                break;
-            default:
-        }
+        Assertions.assertEquals(1, result);
     }
+    @Test
+    void testWhoWinsTheRound_Equal(){
+        opponent.setHealthPoints(50);
+        activePokemon.setHealthPoints(50);
+        int result = battleSystem.whoWinsTheRound(opponent, activePokemon);
+
+        Assertions.assertEquals(0, result);
+    }
+    @Test
+    void testWhoWinsTheRound_Loss(){
+        opponent.setHealthPoints(50);
+        activePokemon.setHealthPoints(20);
+        int result = battleSystem.whoWinsTheRound(opponent, activePokemon);
+
+        Assertions.assertEquals(2, result);
+    }
+
     @Test
     public void testGetActivePokemonWithInvalidInput() {
         Result result  = new Result(10,10);

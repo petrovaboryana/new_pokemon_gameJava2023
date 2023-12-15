@@ -17,7 +17,7 @@ public class AttackMenuTest {
 
     @Test
     public void testAddAttack() {
-        Attackable testAttack = new DefaultAttack("Test attack",12);
+        Attackable testAttack = new DefaultAttack("Test attack", 12);
         attackMenu.addAttack(testAttack);
         assertEquals(1, attackMenu.getAttacks().size());
         assertEquals(testAttack, attackMenu.getAttacks().get(0));
@@ -25,8 +25,8 @@ public class AttackMenuTest {
 
     @Test
     public void testGetRandomAttack() {
-        Attackable attack1 = new DefaultAttack("Test attack1",6);
-        Attackable attack2 = new ElectricAttack("Electric test attack",10);
+        Attackable attack1 = new DefaultAttack("Test attack1", 6);
+        Attackable attack2 = new ElectricAttack("Electric test attack", 10);
         attackMenu.addAttack(attack1);
         attackMenu.addAttack(attack2);
 
@@ -36,19 +36,5 @@ public class AttackMenuTest {
         }
         Assertions.assertTrue(randomAttacks.contains(attack1));
         Assertions.assertTrue(randomAttacks.contains(attack2));
-    }
-    @Test
-    public void testGetAttacks() {
-        Assertions.assertNotNull(attackMenu.getAttacks());
-        Assertions.assertTrue(attackMenu.getAttacks().isEmpty());
-    }
-    @Test
-    public void testSetAttacks() {
-        List<Attackable> newAttacks = new ArrayList<>();
-        newAttacks.add(new DefaultAttack("TestAttack",10));
-
-        attackMenu.setAttacks(newAttacks);
-
-        Assertions.assertEquals(newAttacks, attackMenu.getAttacks());
     }
 }
